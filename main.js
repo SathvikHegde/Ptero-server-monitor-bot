@@ -26,7 +26,7 @@ client.on('interactionCreate', async interaction => {
 		await interaction.reply(powerstate.attributes.current_state);
 
 	} else if (commandName === 'sendcommand') {
-    const Command = interaction.getString('command');
+    const Command = interaction.options.getString('command');
 		const res = await fetch(`https://${process.env.WEBSITE_URL}/api/client/servers/${process.env.serverId}/command`, {
       method: "POST",
       body: JSON.stringify({command: Command}),
@@ -37,7 +37,7 @@ client.on('interactionCreate', async interaction => {
     
     await interaction.reply("THE COMMAND HAS BEEN SENT");
 	} else if(commandName == 'setpowerstate') {
-    const powerstate = interaction.getString('powerstate');
+    const powerstate = interaction.options.getString('powerstate');
     if(!["start", "stop", "kill", "restart"].includes(powerstate.toLowerCase())) return await interaction.reply("Power State must be: 'start', 'stop', 'kill' or 'restart'");
 
     const res = await fetch(`https://${process.env.WEBSITE_URL}/api/client/servers/${process.env.serverId}/power`, {

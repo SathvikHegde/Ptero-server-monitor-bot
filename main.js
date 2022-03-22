@@ -26,6 +26,7 @@ client.on('interactionCreate', async interaction => {
 		await interaction.reply(powerstate.attributes.current_state);
 
 	} else if (commandName === 'sendcommand') {
+
     const Command = interaction.options.getString('command');
 		const res = await fetch(`https://${process.env.WEBSITE_URL}/api/client/servers/${process.env.serverId}/command`, {
       method: "POST",
@@ -36,7 +37,9 @@ client.on('interactionCreate', async interaction => {
     if(res.status == 502) return await interaction.reply('Server must be online to send a command');
     
     await interaction.reply("THE COMMAND HAS BEEN SENT");
+
 	} else if(commandName == 'setpowerstate') {
+
     const powerstate = interaction.options.getString('powerstate');
     if(!["start", "stop", "kill", "restart"].includes(powerstate.toLowerCase())) return await interaction.reply("Power State must be: 'start', 'stop', 'kill' or 'restart'");
 
@@ -47,7 +50,9 @@ client.on('interactionCreate', async interaction => {
     });
 
     await interaction.reply("THE POWER STATE HAS BEEN SET");
+
   } else if(commandName == 'usagedetails') {
+    
     const res = await fetch(`https://${process.env.WEBSITE_URL}/api/client/servers/${process.env.serverId}/resources`, {
       method: "GET",
       headers: {"Authorization": `Bearer ${process.env.APIKEY}`, "Content-Type": "application/json", "Accept": "application/json"}
